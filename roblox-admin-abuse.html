@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox - Games Launcher</title>
+    <style>
+        /* Стиль в стиле темной темы Roblox */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #191B1D;
+            color: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .header {
+            background-color: #232527;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #393B3D;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .container {
+            background-color: #232527;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            text-align: center;
+            width: 350px;
+            margin-top: 80px;
+            z-index: 5;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #00B2FF;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            background-color: #393B3D;
+            color: #FFF;
+            border: 1px solid #555;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .btn {
+            display: none;
+            width: 100%;
+            padding: 15px;
+            background-color: #00E676;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 230, 118, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #00C853;
+        }
+
+        /* Эффект гирлянды (мигающие огни) */
+        .lights-container {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            z-index: 9;
+            justify-content: space-around;
+            pointer-events: none;
+        }
+
+        .light-bulb {
+            width: 15px;
+            height: 25px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            animation: flash 0.5s infinite alternate;
+        }
+
+        /* Генерация разных цветов для гирлянды */
+        .light-bulb:nth-child(odd) { background-color: #FF0000; animation-delay: 0.1s; }
+        .light-bulb:nth-child(even) { background-color: #00FF00; animation-delay: 0.2s; }
+        .light-bulb:nth-child(3n) { background-color: #FFFF00; animation-delay: 0.3s; }
+        .light-bulb:nth-child(4n) { background-color: #00FFFF; animation-delay: 0.4s; }
+
+        @keyframes flash {
+            from { opacity: 0.3; filter: drop-shadow(0 0 0px transparent); }
+            to { opacity: 1; filter: drop-shadow(0 0 12px currentColor); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">ROBLOX</div>
+
+    <!-- Контейнер для гирлянды (появится при активации) -->
+    <div class="lights-container" id="lights">
+        <!-- Создаем несколько лампочек через JS или вручную -->
+        <div class="light-bulb" style="color: #FF0000"></div>
+        <div class="light-bulb" style="color: #00FF00"></div>
+        <div class="light-bulb" style="color: #FFFF00"></div>
+        <div class="light-bulb" style="color: #00FFFF"></div>
+        <div class="light-bulb" style="color: #FF00FF"></div>
+        <div class="light-bulb" style="color: #FF0000"></div>
+        <div class="light-bulb" style="color: #00FF00"></div>
+        <div class="light-bulb" style="color: #FFFF00"></div>
+        <div class="light-bulb" style="color: #00FFFF"></div>
+        <div class="light-bulb" style="color: #FF00FF"></div>
+    </div>
+
+    <div class="container">
+        <h2>Выбор Плейса</h2>
+        
+        <!-- Выпадающий список -->
+        <select id="placeSelect" onchange="checkSelection()">
+            <option value="" disabled selected>-- Выберите игру --</option>
+            <option value="brainrot">Steal a Brainrot</option>
+            <option value="forest">99 night in the forest</option>
+            <option value="garden">Grow a garden</option>
+        </select>
+
+        <!-- Кнопка запуска -->
+        <button id="adminBtn" class="btn" onclick="activateAdminAbuse()">Запустить Admin Abuse</button>
+    </div>
+
+    <!-- Звуковой элемент (тестовый аудиофайл) -->
+    <audio id="abuseSound" src="https://soundhelix.com" preload="auto"></audio>
+
+    <script>
+        // Функция отслеживания выбора в меню
+        function checkSelection() {
+            const select = document.getElementById('placeSelect');
+            const btn = document.getElementById('adminBtn');
+            
+            // Если выбран любой из плейсов, показываем кнопку
+            if (select.value !== "") {
+                btn.style.display = "block";
+            }
+        }
+
+        // Функция при нажатии на "Запустить Admin Abuse"
+        function activateAdminAbuse() {
+            // Показываем гирлянду
+            const lights = document.getElementById('lights');
+            lights.style.display = 'flex';
+
+            // Включаем звук
+            const sound = document.getElementById('abuseSound');
+            sound.currentTime = 0; // Сброс на начало звука
+            sound.play().catch(error => {
+                console.log("Автовоспроизведение заблокировано браузером. Требуется клик по экрану.");
+            });
+
+            // Небольшой визуальный эффект для фона
+            document.body.style.transition = "background-color 0.5s";
+            document.body.style.backgroundColor = "#0F1011";
+        }
+    </script>
+</body>
+</html>
